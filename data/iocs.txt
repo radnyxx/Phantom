@@ -1,0 +1,15 @@
+# Bundled IOC hash list (MD5, SHA1, SHA256)
+# One hash per line; lines starting with # are ignored.
+
+# EICAR test file (safe — used for AV testing)
+44d88612fea8a8f36de82e1278abb02f
+275a021bbfb6489e54d471899f7db9a1668e3f924b4e4bcbaa047de065ecbb4cb
+275a021bbfb6489e54d471899f7db9a1668e3f924b4e4bcbaa047de065ecbb4cb
+
+# WannaCry ransomware (reference samples)
+84c82835a5d21bbcf75a61709d8ab610
+ed01ebfbc9eb5bbea545af4d01bf5f107166184a043119f25f8e51e2e982c8d
+
+# Emotet loader (reference)
+5a032cbfc7e1ce33a7b1c410f56e5d8
+a7f98f43099be6832a2b32b0abfb5d0e
