@@ -43,7 +43,7 @@ def show_dashboard(
         "  ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝ ╚═╝     ╚═╝"
     )
     
-    console.print(f"[bold #e07a5f]{pixel_3d_banner}[/bold #e07a5f]")
+    console.print(f"[bold #a7c957]{pixel_3d_banner}[/bold #a7c957]")
     console.print("  [dim]Threat Intelligence Dashboard[/dim]\n")
     
     # Target info
@@ -70,12 +70,12 @@ def show_dashboard(
     # Score breakdown
     if assessment.breakdown:
         breakdown = Table(title="Score Breakdown", box=box.ROUNDED, show_lines=False)
-        breakdown.add_column("Factor", style="cyan")
+        breakdown.add_column("Factor", style="#a7c957")
         breakdown.add_column("Points", justify="right", style="bold")
         for factor, pts in assessment.breakdown.items():
             label = factor.replace("_", " ").title()
             breakdown.add_row(label, f"+{pts}")
-        console.print(breakdown)
+        console.print(" [bold #a7c957]Score Breakdown[/bold #a7c957]")
         console.print()
 
     # Findings
@@ -85,13 +85,13 @@ def show_dashboard(
         findings.add_column("Detail")
         for i, finding in enumerate(intel.raw_findings, 1):
             findings.add_row(str(i), finding)
-        console.print(findings)
+        console.print(" [bold #a7c957]Findings[/bold #a7c957]")
         console.print()
 
     # Sources summary
     if intel.sources:
         sources = Table(title="Intel Sources", box=box.ROUNDED)
-        sources.add_column("Source", style="cyan")
+        sources.add_column("Source", style="#a7c957")
         sources.add_column("Status", style="green")
         for name in intel.sources:
             if name == "mode":
