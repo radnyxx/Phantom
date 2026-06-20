@@ -78,16 +78,25 @@ def run_interactive_loop(args: argparse.Namespace, hashcheck_mod: any):
     console = Console()
     console.clear()
     
-
-    banner = Text()
-    banner.append("PHANTOM", style="bold #e07a5f")
-    banner.append(" › Threat Intelligence Environment\n", style="dim")
-    console.print(banner)
-    console.print("[dim]Type 'exit' or press Ctrl+C to drop out of the session.[/dim]\n")
+    pixel_3d_banner = (
+        "  ██████╗ ██╗  ██╗ █████╗ ███╗   ██╗████████╗ ██████╗ ███╗   ███╗\n"
+        "  ██╔══██╗██║  ██║██╔══██╗████╗  ██║╚══██╔══╝██╔═══██╗████╗ ████║\n"
+        "  ██████╔╝███████║███████║██╔██╗ ██║   ██║   ██║   ██║██╔████╔██║\n"
+        "  ██╔═══╝ ██╔══██║██╔══██║██║╚██╗██║   ██║   ██║   ██║██║╚██╔╝██║\n"
+        "  ██║     ██║  ██║██║  ██║██║ ╚████║   ██║   ╚██████╔╝██║ ╚═╝ ██║\n"
+        "  ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝ ╚═╝     ╚═╝"
+    )
+    console.print(f"[bold #a7c957]{pixel_3d_banner}[/bold #a7c957]")
+    console.print("  [dim]Threat Intelligence Workspace Suite[/dim]\n")
     
+    console.print(" [bold #a7c957]How to use:[/bold #a7c957]")
+    console.print("  Input any [bold]Domain[/bold] (e.g., wikipedia.org), [bold]IP Address[/bold], or [bold]URL[/bold] to scan for threats.")
+    console.print("  The tool will automatically cross-reference intel sources, score risk, and write a report.")
+    console.print("\n [dim]Type 'exit' to quit the workspace.[/dim]\n")
+
     while True:
         try:
-            target = console.input("[bold #e07a5f]❯[/bold #e07a5f] Enter target (IP/Domain/URL): ").strip()
+            target = console.input("[bold #a7c957]❯[/bold #a7c957] Enter target (IP/Domain/URL): ").strip()
             
             if not target:
                 continue
