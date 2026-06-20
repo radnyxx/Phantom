@@ -78,7 +78,7 @@ def run_interactive_loop(args: argparse.Namespace, hashcheck_mod: any):
     console = Console()
     console.clear()
     
-    # Render the gorgeous Claude Code-inspired header
+
     banner = Text()
     banner.append("PHANTOM", style="bold #e07a5f")
     banner.append(" › Threat Intelligence Environment\n", style="dim")
@@ -87,7 +87,6 @@ def run_interactive_loop(args: argparse.Namespace, hashcheck_mod: any):
     
     while True:
         try:
-            # Elegant minimalist prompt arrow matching your theme accent color
             target = console.input("[bold #e07a5f]❯[/bold #e07a5f] Enter target (IP/Domain/URL): ").strip()
             
             if not target:
@@ -114,7 +113,7 @@ def main() -> int:
         prog="phantom",
         description="Phantom — query threat intel APIs, score risk, and report findings.",
     )
-    # Making target optional (nargs="?") so we can easily fall back to our menu shell!
+
     parser.add_argument("target", nargs="?", default=None, help="IP, domain, URL, or file hash to investigate")
     parser.add_argument("-o", "--output", default=str(DEFAULT_REPORT), help="Markdown report path")
     parser.add_argument("--no-dashboard", action="store_true", help="Skip the rich terminal dashboard")
@@ -124,7 +123,7 @@ def main() -> int:
 
     hashcheck_mod, _ = load_hashcheck()
 
-    # Route logic path based on user CLI invocation state
+
     if args.target is None:
         run_interactive_loop(args, hashcheck_mod)
         return 0
