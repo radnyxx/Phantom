@@ -3,6 +3,6 @@ __pycache__/
 *.py[cod]
 *.so
 build/
-.env
+.env.example
 reports/
 data/feeds/drop_cache.json
