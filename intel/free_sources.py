@@ -202,8 +202,9 @@ class FreeThreatIntel:
 
     def _check_rdap(self, domain: str, result: IntelResult) -> None:
         try:
+            cleaned_domain = domain[4:] if domain.lower().startswith("www.") else domain
             resp = self.session.get(
-                f"https://rdap.org/domain/{domain}",
+                f"https://rdap.org/domain/{cleaned_domain}",
                 timeout=15,
                 headers={"Accept": "application/rdap+json"},
             )
@@ -261,7 +262,7 @@ class FreeThreatIntel:
         try:
             resp = self.session.get(
                 "https://urlscan.io/api/v1/search/",
-                params={"q": f"page.url:{search_target}"},
+                params={"q": f'page.url:"{search_target}"'},
                 timeout=15,
             )
             resp.raise_for_status()
