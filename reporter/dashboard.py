@@ -35,10 +35,10 @@ def show_dashboard(
     console = Console()
 
     header = Text()
-    header.append("PHANTOM", style="bold cyan")
+    header.append("PHANTOM", style="bold #e07a5f")
     header.append("  Threat Intelligence Dashboard", style="dim")
 
-    console.print(Panel(header, box=box.DOUBLE_EDGE, border_style="cyan"))
+    console.print(Panel(header, box=box.DOUBLE_EDGE, border_style="#e07a5f"))
     console.print()
 
     # Target info
@@ -105,11 +105,17 @@ def show_dashboard(
         ))
         console.print()
 
-    # Errors
+   # Errors
     if intel.errors:
-        for err in intel.errors:
-            console.print(f"[yellow]⚠ {err}[/yellow]")
-
+        error_text = "\n".join(f"[bold yellow]![/bold yellow] {err}" for err in intel.errors)
+        console.print(Panel(
+            f"[yellow]{error_text}[/yellow]", 
+            title="System Warnings", 
+            border_style="yellow",
+            box=box.ROUNDED
+        ))
+        
+        console.print()
     console.print(Panel(
         assessment.summary,
         title="Summary",
