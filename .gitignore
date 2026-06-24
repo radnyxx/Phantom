@@ -6,3 +6,4 @@ build/
 .env.example
 reports/
 data/feeds/drop_cache.json
+.env
