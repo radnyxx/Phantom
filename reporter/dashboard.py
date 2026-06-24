@@ -75,7 +75,7 @@ def show_dashboard(
         for factor, pts in assessment.breakdown.items():
             label = factor.replace("_", " ").title()
             breakdown.add_row(label, f"+{pts}")
-        console.print(" [bold #a7c957]Score Breakdown[/bold #a7c957]")
+        console.print(breakdown)
         console.print()
 
     # Findings
@@ -85,7 +85,7 @@ def show_dashboard(
         findings.add_column("Detail")
         for i, finding in enumerate(intel.raw_findings, 1):
             findings.add_row(str(i), finding)
-        console.print(" [bold #a7c957]Findings[/bold #a7c957]")
+        console.print(findings)
         console.print()
 
     # Sources summary

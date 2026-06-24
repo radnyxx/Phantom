@@ -9,6 +9,7 @@ from typing import Any
 
 import requests
 
+from intel import phishing
 from intel.constants import SUSPICIOUS_PORTS
 from intel.free_sources import FreeThreatIntel
 from intel.portscan import probe_ports
@@ -33,6 +34,7 @@ class IntelResult:
     suspicious_ports: list[int] = field(default_factory=list)
     recent_whois_change: bool = False
     raw_findings: list[str] = field(default_factory=list)
+    phishing_score: int = 0
 
 
 class ThreatIntel:
@@ -96,14 +98,33 @@ class ThreatIntel:
         if self.has_api_keys:
             if target_type == "ip" and not self.abuse_key:
                 self._free._check_ip(target, result)
+            # NOTE: these were previously if/elif, which meant a domain missing
+            # *both* vt_key and urlscan_key only ever got the vt-gap-fill and
+            # silently skipped the urlscan-gap-fill. They're independent gaps
+            # and must both run when their respective key is absent.
             if target_type == "domain" and not self.vt_key:
                 self._free._check_domain(target, result)
-            elif target_type == "domain" and not self.urlscan_key:
+            if target_type == "domain" and not self.urlscan_key:
                 self._free._check_urlscan(target, result)
             if target_type == "url" and not self.urlscan_key:
                 self._free._check_urlscan(target, result)
 
+        if target_type in ("url", "domain"):
+            self._apply_phishing_heuristics(target, result)
+
         return result
+
+    def _apply_phishing_heuristics(self, target: str, result: IntelResult) -> None:
+        """Run local pattern heuristics (no network) for lookalike/phishing signals."""
+        findings = phishing.analyze(target)
+        if not findings.flagged:
+            return
+        result.sources["phishing_heuristics"] = {
+            "score": findings.score,
+            "indicators": findings.indicators,
+        }
+        result.phishing_score = findings.score
+        result.raw_findings.extend(f"Phishing heuristic: {i}" for i in findings.indicators)
 
     def _get(self, url: str, headers: dict | None = None, params: dict | None = None) -> dict | None:
         try:

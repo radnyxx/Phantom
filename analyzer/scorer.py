@@ -53,10 +53,19 @@ class RiskScorer:
             total += WEIGHT_RECENT_WHOIS
 
         vt = intel.sources.get("virustotal", {})
-        if vt.get("suspicious", 0) > 0 and not intel.known_malicious:
+        if vt.get("suspicious", 0) > 0:
+            # Previously this was skipped entirely when known_malicious was
+            # already True, which meant two targets with identical VT
+            # "suspicious" signal could score differently depending on what
+            # else triggered first. Suspicious-engine count is independent
+            # evidence and should always contribute.
             partial = min(20, vt["suspicious"] * 5)
             breakdown["vt_suspicious"] = partial
             total += partial
+
+        if intel.phishing_score:
+            breakdown["phishing_heuristics"] = intel.phishing_score
+            total += intel.phishing_score
 
         abuse = intel.sources.get("abuseipdb", {})
         abuse_score = abuse.get("abuse_score", 0)
